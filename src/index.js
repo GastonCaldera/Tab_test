@@ -4,10 +4,12 @@ import ReactDOM from 'react-dom';
 import AppRouter, { history } from './routers/AppRouter';
 import reportWebVitals from './reportWebVitals';
 
+import './styles/styles.scss';
 import configureStore from './store/configureStore';
 import firebase from './config/firebase'
 import { login, logout } from './actions/auth';
-import LoadingPage from './componenst/LoadingPage'
+import LoadingPage from './components/LoadingPage'
+
 
 const store = configureStore();
 const jsx = (

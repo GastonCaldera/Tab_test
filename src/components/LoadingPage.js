@@ -2,7 +2,7 @@ import React from 'react'
 
 const LoadginPage = () => (
     <div className='loader'>
-        <h1>Loading...</h1>
+        <img className='loader__image' src='/images/loader.gif'/>
     </div>
 )
 

@@ -24,11 +24,12 @@ const Login = ({ startLogin }) => {
   }
 
   return (
-    <div className="Login">
-      <div className="Login__header">
-        <hi className="Login__header__title">Welcome</hi>
-      </div>
-      <div className="Login__container">
+    <div className="login">
+      <div className="header"></div>
+      <div className="login__container">
+        <div className="login__container_header">
+          <hi className="login__header__title">Loing</hi>
+        </div>
         <input
           className="email"
           onChange={(e) => setUser({ ...user, email: e.target.value })}
@@ -41,13 +42,13 @@ const Login = ({ startLogin }) => {
           placeholder="Password"
           type="password"
         ></input>
-        {validation.status ? "" : <h2>{validation.error}</h2>}
+        {validation.status ? "" : <h1 className="error__container">{validation.error}</h1>}
+        <div className="login__footer">
+          <button className="login__botton" type="button" onClick={handleClickLoing}>LogIn</button>
+          <button className="login__botton" type="button" onClick={handleClickSignIn}>Create New Account</button>
+        </div>
       </div>
-      <div className="Login__footer">
-        <button className="Login__botton" type="button" onClick={handleClickLoing}>LogIn</button>
-        <button className="Login__botton" type="button" onClick={handleClickSignIn}>Create New Account</button>
-      </div>
-    </div>
+    </div >
   );
 }
 

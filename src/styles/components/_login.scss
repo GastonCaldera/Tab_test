@@ -1,0 +1,30 @@
+.login {
+    margin: 0 auto;
+    margin-top: 15vw;
+    padding: 0 $m-size;
+    text-align: center;
+}
+
+.login__container {
+    background: $off-white;
+    margin: 0 auto;
+    padding: 0 $m-size;
+    max-width: 30rem;
+    border: 1px solid $dark-blue;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.login__container_header {
+    color: $dark-blue;
+    margin: 0 auto;
+    padding: 0 $m-size;
+    font-size: $font-size-large;
+    text-align: center;
+}
+
+.login__footer {
+    display: flex;
+    padding-bottom: $s-size;
+    justify-content: space-around;
+}
