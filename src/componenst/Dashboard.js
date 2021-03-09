@@ -1,30 +1,25 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { signOut } from '../utils/login'
+
+
+import { startLogout } from '../actions/auth';
+import { setUserAction } from '../actions/user';
 import { getUser, updatedUser } from '../utils/users'
 
-const Dashboard = (props) => {
+const Dashboard = ({ uid, startLogout, setUserAction }) => {
   let history = useHistory();
   let [links, setLinks] = useState({ facebook: "", instagram: "", twitter: "" })
-  let [user, setUser] = useState({ email: props.location.state[0].email, uid: props.location.state[0].uid, id: '' })
+  let [user, setUser] = useState({ email: "", uid: uid, id: "" })
   let [validation, setValidation] = useState({ error: "", status: false })
 
   const handleLogout = async () => {
-    await signOut()
+    await startLogout()
     history.push("/");
   }
 
   const handleProfile = async () => {
-    history.push("/profile", [
-      {
-        email: user.email,
-        id: user.id,
-        uid: user.uid,
-        facebookLink: links.facebook,
-        instagramLink: links.instagram,
-        twitterLink: links.twitter
-      }
-    ]);
+    history.push("/profile");
   }
 
   const handleClickSubmit = async () => {
@@ -39,25 +34,17 @@ const Dashboard = (props) => {
       error: newLinks.error,
       status: newLinks.status,
     })
-    debugger
-    if (newLinks.status) {
-      history.push("/profile", [
-        {
-          email: user.email,
-          id: user.id,
-          facebookLink: links.facebook,
-          instagramLink: links.instagram,
-          twitterLink: links.twitter
-        }
-      ]);
-    }
 
+    if (newLinks.status) {
+      history.push("/profile");
+    }
   }
 
   useEffect(async () => {
     getUser(user.uid).then((data) => {
       setLinks({ facebook: data.facebookLink, instagram: data.instagramLink, twitter: data.twitterLink })
-      setUser({ ...user, id: data.id })
+      setUser({ ...user, email: data.email, id: data.id })
+      setUserAction(data.email, data.id, uid, data.facebookLink, data.instagramLink, data.twitterLink)
     })
   }, [])
 
@@ -96,4 +83,13 @@ const Dashboard = (props) => {
   );
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => ({
+  uid: state.auth.uid
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  startLogout: () => dispatch(startLogout()),
+  setUserAction: (email, id, uid, facebook, instagram, twitter) => dispatch(setUserAction(email, id, uid, facebook, instagram, twitter))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

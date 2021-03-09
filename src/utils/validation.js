@@ -21,7 +21,7 @@ export const validateCreateUser = async (email, password) => {
             instagramLink: '',
             twitterLink: '',
         })
-        
+
         return { error: "", status: true, uid: createUserLogin.user.uid }
     } catch (error) {
         return { error: error.message, status: false }
@@ -29,15 +29,24 @@ export const validateCreateUser = async (email, password) => {
 }
 
 export const validateUrl = (facebookLink, instagramLink, twitterLink) => {
-    if (!validator.isURL(facebookLink) || !facebookLink.startsWith('https://www.facebook.com/')){
+    if (!validator.isURL(facebookLink) || !facebookLink.startsWith('https://www.facebook.com/')) {
         return { error: "Please insert a valid Facebook url.", status: false }
     }
-    if (!validator.isURL(instagramLink) || !instagramLink.startsWith('https://www.instagram.com/')){
+    if (!validator.isURL(instagramLink) || !instagramLink.startsWith('https://www.instagram.com/')) {
         return { error: "Please insert a valid Instagram url.", status: false }
     }
-    if (!validator.isURL(twitterLink) || !twitterLink.startsWith('https://twitter.com/')){
+    if (!validator.isURL(twitterLink) || !twitterLink.startsWith('https://twitter.com/')) {
         return { error: "Please insert a valid Twitter url.", status: false }
     }
 
     return { error: "", status: true }
 }
+
+// export const validateStatus = async () => {
+//     await firebase.auth().onAuthStateChanged((user) => {
+//         if (user) {
+//             const data = user
+//             debugger
+//         }
+//     });
+// }

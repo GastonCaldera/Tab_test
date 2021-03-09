@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { signIn } from '../utils/login'
+import { startLogin } from '../actions/auth';
 
-const Login = () => {
+const Login = ({ startLogin }) => {
   let history = useHistory();
   let [user, setUser] = useState({ email: "", password: "" })
   let [validation, setValidation] = useState({ error: "", status: false })
 
   const handleClickLoing = async () => {
-    const result = await signIn(user.email, user.password)
-
+    const result = await startLogin(user.email, user.password)
     setValidation({
       error: result.error,
       status: result.status,
@@ -51,4 +51,10 @@ const Login = () => {
   );
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  startLogin: (email, password) => dispatch(startLogin(email, password))
+});
+
+
+export default connect(undefined, mapDispatchToProps)(Login);
+

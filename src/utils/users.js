@@ -10,6 +10,7 @@ export const getUser = async (uid) => {
         snapshot.forEach(doc => {
             user = {
                 id: doc.id,
+                uid: doc.data().uid,
                 email: doc.data().email,
                 twitterLink: doc.data().twitterLink,
                 instagramLink: doc.data().instagramLink,

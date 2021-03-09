@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { signOut } from '../utils/login'
 
-const Profile = (props) => {
+import { startLogout } from '../actions/auth';
+
+const Profile = ({ startLogout, userState }) => {
     let history = useHistory();
     let [links, setLinks] = useState({
-        facebook: props.location.state[0].facebookLink,
-        instagram: props.location.state[0].instagramLink,
-        twitter: props.location.state[0].twitterLink
+        facebook: userState.facebook,
+        instagram: userState.instagram,
+        twitter: userState.twitter
     })
     let [user, setUser] = useState({
-        email: props.location.state[0].email,
-        id: props.location.state[0].id,
-        uid: props.location.state[0].uid
+        email: userState.email,
+        id: userState.id,
+        uid: userState.uid
     })
 
     const handleLogout = async () => {
-        await signOut()
+        await startLogout()
         history.push("/");
     }
 
@@ -58,4 +60,12 @@ const Profile = (props) => {
     );
 }
 
-export default Profile;
+const mapStateToProps = (state) => ({
+    userState: state.user
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    startLogout: () => dispatch(startLogout())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
